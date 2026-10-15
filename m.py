@@ -22,26 +22,26 @@ from tkinter import ttk
 
 # Mettre les commandes en string et renvoyer un tableau
 def set_cmd():
-    # 1. Consommation GPU globale
+    # Consommation GPU globale
     cmd1 = ["nvidia-smi"]
 
-    # 2. Événements de limitation des fréquences GPU
+    # Événements de limitation des fréquences GPU
     cmd2 = [
         "bash", "-c",
         'nvidia-smi -q -d PERFORMANCE | grep -iE "thermal|power|slowdown|clocks event"'
     ]
 
-    # 3. Température, fréquence GPU et puissance
+    #  Température, fréquence GPU et puissance
     cmd3 = [
         "nvidia-smi",
         "--query-gpu=temperature.gpu,clocks.sm,clocks.max.sm,power.draw",
         "--format=csv"
     ]
 
-    # 4. RAM système (total / utilisée, en MiB) - LC_ALL=C force les libellés en anglais
+    # RAM système (total / utilisée, en MiB) - LC_ALL=C force les libellés en anglais
     cmd4 = ["bash", "-c", "LC_ALL=C free -m"]
 
-    # 5. RAM de chaque processus (PID et RSS en KiB, sans l'en-tête grâce aux "=")
+    # RAM de chaque processus (PID et RSS en KiB, sans l'en-tête grâce aux "=")
     cmd5 = ["ps", "-eo", "pid=,rss="]
 
     return [cmd1, cmd2, cmd3, cmd4, cmd5]
@@ -65,6 +65,8 @@ def run_subprocesses(commands):
     return results
 
 
+
+# parser l'output pour recuperer des data => code de la fonction écrit par Claude.
 def parser(result):
     print("PARSER ==> APPELLER")
     print(result)
@@ -233,6 +235,7 @@ def parser(result):
 
 
 
+# afficher les data récupérer dans une interface graphique ==> code de la fonction écrite par Claude.
 def render():
     root = tk.Tk()
     root.title("GPU MONITOR PERSO")
@@ -549,6 +552,8 @@ def render():
     root.mainloop()
 
 
+
+# Lancer le script
 def RUN():
     print("RUN ==> APPELLER RUN SUBPROCESS ET SET CMD")
 
